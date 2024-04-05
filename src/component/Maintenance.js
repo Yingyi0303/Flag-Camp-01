@@ -1,18 +1,19 @@
-import React from "react";
-import { Layout, Menu } from "antd";
+import React, { useState } from "react";
+import { Layout, Menu, Checkbox, Button, List, Typography } from "antd";
 import {
-  WechatWorkOutlined,
   PieChartOutlined,
   MessageOutlined,
   OrderedListOutlined,
   CalendarOutlined,
   CreditCardOutlined,
+  WechatWorkOutlined,
 } from "@ant-design/icons";
+import "antd/dist/antd.css";
 import { Link } from "react-router-dom";
 
-const { Header, Content, Sider } = Layout;
+const { Header, Sider, Content } = Layout;
 
-const Maintenance = () => {
+const MaintenanceOrder = () => {
   const sidebarItems = [
     { key: "1", icon: <PieChartOutlined />, label: "Dashboard", path: "/" },
     {
@@ -47,12 +48,40 @@ const Maintenance = () => {
     },
   ];
 
+  const objects = [
+    { id: 1, name: "Object 1", price: 100 },
+    { id: 2, name: "Object 2", price: 150 },
+    { id: 3, name: "Object 3", price: 200 },
+    { id: 4, name: "Object 4", price: 250 },
+    { id: 5, name: "Object 5", price: 300 },
+    { id: 6, name: "Object 6", price: 350 },
+    { id: 7, name: "Object 7", price: 400 },
+  ];
+
+  // State for selected items
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  // Function to handle item selection
+  const onItemSelect = (id) => {
+    setSelectedItems((prevSelectedItems) => {
+      if (prevSelectedItems.includes(id)) {
+        return prevSelectedItems.filter((item) => item !== id);
+      } else {
+        return [...prevSelectedItems, id];
+      }
+    });
+  };
+
+  // Calculate total amount
+  const totalAmount = selectedItems.reduce((sum, itemId) => {
+    const item = objects.find((obj) => obj.id === itemId);
+    return sum + item.price;
+  }, 0);
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header className="header">
-        <div style={{ color: "white", fontSize: "1.5em" }}>
-          Maintenance Order
-        </div>
+        <div style={{ color: "white", fontSize: "1.5em" }}>Maintance Order</div>
       </Header>
       <Layout>
         <Sider width={200} className="site-layout-background">
@@ -68,17 +97,38 @@ const Maintenance = () => {
             ))}
           </Menu>
         </Sider>
-        <Layout style={{ padding: "0 24px 24px" }}>
-          <Content
-            className="site-layout-background"
-            style={{ padding: 24, margin: 0, minHeight: 280 }}
+        <Content
+          style={{ margin: "24px 16px", padding: 24, background: "#fff" }}
+        >
+          <List
+            header={<div>Select Objects</div>}
+            bordered
+            dataSource={objects}
+            renderItem={(item) => (
+              <List.Item>
+                <Checkbox
+                  checked={selectedItems.includes(item.id)}
+                  onChange={() => onItemSelect(item.id)}
+                >
+                  {`${item.name} - $${item.price}`}
+                </Checkbox>
+              </List.Item>
+            )}
+          />
+          <div
+            style={{
+              marginTop: 16,
+              display: "flex",
+              justifyContent: "space-between",
+            }}
           >
-            {/* Your content here */}
-          </Content>
-        </Layout>
+            <Typography.Text>Total amount: ${totalAmount}</Typography.Text>
+            <Button type="primary">Place Order</Button>
+          </div>
+        </Content>
       </Layout>
     </Layout>
   );
 };
 
-export default Maintenance;
+export default MaintenanceOrder;
