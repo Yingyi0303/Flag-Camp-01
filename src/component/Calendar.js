@@ -16,7 +16,7 @@ const { Header, Content, Sider } = Layout;
 const CalendarPage = () => {
   const [currentMonth, setCurrentMonth] = useState(moment());
 
-  // Example events, you could fetch these from an API or your back-end
+  // Example events
   const events = [
     { date: "2024-04-05", title: "Rent Payment Due" },
     { date: "2024-04-20", title: "Meeting with John" },

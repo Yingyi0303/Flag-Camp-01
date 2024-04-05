@@ -81,7 +81,9 @@ const MaintenanceOrder = () => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header className="header">
-        <div style={{ color: "white", fontSize: "1.5em" }}>Maintance Order</div>
+        <div style={{ color: "white", fontSize: "1.5em" }}>
+          Maintenance Order
+        </div>
       </Header>
       <Layout>
         <Sider width={200} className="site-layout-background">

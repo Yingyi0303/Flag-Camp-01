@@ -9,7 +9,6 @@ export const DiscussionThread = () => {
     { id: 1, author: "John", content: "This is the first comment." },
     { id: 2, author: "Alice", content: "I agree with John." },
     { id: 3, author: "Bob", content: "Nice discussion!" },
-    // Add more dummy comments as needed
   ]);
   const [newComment, setNewComment] = useState("");
 
@@ -21,7 +20,7 @@ export const DiscussionThread = () => {
     if (newComment.trim() !== "") {
       const newCommentObj = {
         id: comments.length + 1,
-        author: "You", // For demonstration purposes, assuming the current user's name is "You"
+        author: "You",
         content: newComment,
       };
       setComments([newCommentObj, ...comments]);

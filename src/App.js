@@ -1,53 +1,129 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { Button, Calendar } from "antd";
+import { Button } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import DiscussionBoard from "./component/DiscussionBoard";
 import ChatThread from "./component/ChatThread";
 import Payment from "./component/Payment";
 import CalendarPage from "./component/Calendar";
 import Maintenance from "./component/Maintenance";
+import Footer from "./component/Footer";
+import "./App.css";
 
-// Separate component for the home or landing page
+const containerStyle = {
+  position: "relative",
+  minHeight: "100vh",
+};
+
+const imageStyle = {
+  width: "100%",
+  height: "100vh",
+  objectFit: "cover",
+};
+
+const headerStyle = {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  display: "flex",
+  justifyContent: "left",
+  alignItems: "center",
+  padding: "20px 0",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+};
+
+const buttonContainerStyle = {
+  display: "flex",
+  flexDirection: "row",
+};
+
+const buttonStyle = {
+  marginRight: "10px",
+  background: "transparent",
+  color: "white",
+  border: "none",
+};
+
 const Home = () => (
-  <div style={{ textAlign: "center", padding: "20px" }}>
+  <div style={containerStyle}>
     <img
-      src="https://iiif.micr.io/ZKSPH/full/1280,/0/default.jpg"
+      src="https://iiif.micr.io/ZKSPH/full/1280,/0/default.jpg" //replace with apartment image
       alt="Community Image"
-      style={{ maxWidth: "30%", marginBottom: "20px" }}
+      style={imageStyle}
     />
-    <div>
-      <Link to="/discussions">
-        <Button type="primary" size="large" style={{ marginRight: "10px" }}>
-          Discussion Board
-        </Button>
-      </Link>
-
-      {/* Other buttons */}
-      <Link to="/chat">
-        <Button type="primary" size="large" style={{ marginRight: "10px" }}>
-          Chat Thread
-        </Button>
-      </Link>
-
-      <Link to="/maintenance">
-        <Button type="primary" size="large" style={{ marginRight: "10px" }}>
-          Maintanence Order
-        </Button>
-      </Link>
-
-      <Link to="/calendar">
-        <Button type="primary" size="large" style={{ marginRight: "10px" }}>
-          Calendar Events
-        </Button>
-      </Link>
-
-      <Link to="/payment">
-        <Button type="primary" size="large" style={{ marginRight: "10px" }}>
-          Payment Tool
-        </Button>
-      </Link>
+    <div
+      style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        textAlign: "center",
+        zIndex: 1,
+      }}
+    >
+      <h1 style={{ color: "white", fontSize: "4rem" }}>
+        Welcome to Our Community Hub!
+      </h1>
     </div>
+    <div style={{ ...headerStyle, justifyContent: "space-between" }}>
+      <div style={buttonContainerStyle}>
+        <Link to="/discussions">
+          <Button
+            type="primary"
+            size="large"
+            style={buttonStyle}
+            className="custom-button" //hover doesn't work right now
+          >
+            Discussion Board
+          </Button>
+        </Link>
+        <Link to="/chat">
+          <Button
+            type="primary"
+            size="large"
+            style={buttonStyle}
+            className="custom-button"
+          >
+            Chat Thread
+          </Button>
+        </Link>
+        <Link to="/maintenance">
+          <Button
+            type="primary"
+            size="large"
+            style={buttonStyle}
+            className="custom-button"
+          >
+            Maintenance Order
+          </Button>
+        </Link>
+        <Link to="/calendar">
+          <Button
+            type="primary"
+            size="large"
+            style={buttonStyle}
+            className="custom-button"
+          >
+            Calendar Events
+          </Button>
+        </Link>
+        <Link to="/payment">
+          <Button
+            type="primary"
+            size="large"
+            style={buttonStyle}
+            className="custom-button"
+          >
+            Payment Tool
+          </Button>
+        </Link>
+      </div>
+      <Button type="primary" size="large" style={{ marginRight: "20px" }}>
+        <UserOutlined /> Login / Sign Up
+      </Button>
+    </div>
+    <Footer />
   </div>
 );
 

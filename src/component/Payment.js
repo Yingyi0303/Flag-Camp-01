@@ -1,5 +1,14 @@
 import React from "react";
-import { Layout, Menu } from "antd";
+import {
+  Layout,
+  Menu,
+  Form,
+  Input,
+  Select,
+  Button,
+  Table,
+  Typography,
+} from "antd";
 import {
   WechatWorkOutlined,
   PieChartOutlined,
@@ -11,6 +20,8 @@ import {
 import { Link } from "react-router-dom";
 
 const { Header, Content, Sider } = Layout;
+const { Option } = Select;
+const { Title } = Typography;
 
 const Payment = () => {
   const sidebarItems = [
@@ -47,6 +58,74 @@ const Payment = () => {
     },
   ];
 
+  const paymentHistory = [
+    {
+      key: "1",
+      date: "2023-01-01",
+      amount: "$500",
+      purpose: "Rent",
+    },
+    {
+      key: "2",
+      date: "2023-02-01",
+      amount: "$500",
+      purpose: "Rent",
+    },
+    {
+      key: "3",
+      date: "2023-02-09",
+      amount: "$95.20",
+      purpose: "Parking",
+    },
+    {
+      key: "4",
+      date: "2023-03-01",
+      amount: "$500",
+      purpose: "Rent",
+    },
+    {
+      key: "5",
+      date: "2023-04-01",
+      amount: "$500",
+      purpose: "Rent",
+    },
+    {
+      key: "6",
+      date: "2023-04-15",
+      amount: "$120",
+      purpose: "Cleaning Fee",
+    },
+    {
+      key: "7",
+      date: "2023-05-01",
+      amount: "$500",
+      purpose: "Rent",
+    },
+  ];
+
+  // Columns configuration for the payment history table
+  const columns = [
+    {
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
+    },
+    {
+      title: "Purpose",
+      dataIndex: "purpose",
+      key: "purpose",
+    },
+  ];
+
+  const paginationConfig = {
+    pageSize: 10,
+  };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Header className="header">
@@ -71,7 +150,33 @@ const Payment = () => {
             className="site-layout-background"
             style={{ padding: 24, margin: 0, minHeight: 280 }}
           >
-            {/* Your content here */}
+            <Form layout="vertical">
+              <Form.Item label="Name" name="name">
+                <Input placeholder="Enter your name" />
+              </Form.Item>
+              <Form.Item label="Apartment Number" name="apartmentNumber">
+                <Input placeholder="Enter your apartment number" />
+              </Form.Item>
+              <Form.Item label="Purpose of Payment" name="paymentPurpose">
+                <Select placeholder="Select a purpose">
+                  <Option value="rent">Rent</Option>
+                  <Option value="cleaning fee">Maintenance</Option>
+                  <Option value="parking">Parking</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item label="Amount Due" name="amountDue">
+                <Input prefix="$" placeholder="Amount" />
+              </Form.Item>
+              <Button type="primary" htmlType="submit">
+                Make Payment
+              </Button>
+            </Form>
+            <Table
+              columns={columns}
+              dataSource={paymentHistory}
+              pagination={paginationConfig}
+              style={{ marginTop: 24 }}
+            />
           </Content>
         </Layout>
       </Layout>
