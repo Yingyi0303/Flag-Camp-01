@@ -77,7 +77,7 @@ const Home = () => {
           zIndex: 1,
         }}
       >
-        <h1 style={{ color: "white", fontSize: "4rem" }}>
+        <h1 style={{ color: "white", fontSize: "3rem" }}>
           Welcome to Our Community Hub!
         </h1>
       </div>
