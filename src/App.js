@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
@@ -8,6 +8,7 @@ import Payment from "./component/Payment";
 import CalendarPage from "./component/Calendar";
 import Maintenance from "./component/Maintenance";
 import Footer from "./component/Footer";
+import SigninForm from "./component/SigninForm";
 import "./App.css";
 
 const containerStyle = {
@@ -45,87 +46,111 @@ const buttonStyle = {
   border: "none",
 };
 
-const Home = () => (
-  <div style={containerStyle}>
-    <img
-      src="https://iiif.micr.io/ZKSPH/full/1280,/0/default.jpg" //replace with apartment image
-      alt="Community Image"
-      style={imageStyle}
-    />
-    <div
-      style={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        textAlign: "center",
-        zIndex: 1,
-      }}
-    >
-      <h1 style={{ color: "white", fontSize: "4rem" }}>
-        Welcome to Our Community Hub!
-      </h1>
-    </div>
-    <div style={{ ...headerStyle, justifyContent: "space-between" }}>
-      <div style={buttonContainerStyle}>
-        <Link to="/discussions">
-          <Button
-            type="primary"
-            size="large"
-            style={buttonStyle}
-            className="custom-button" //hover doesn't work right now
-          >
-            Discussion Board
-          </Button>
-        </Link>
-        <Link to="/chat">
-          <Button
-            type="primary"
-            size="large"
-            style={buttonStyle}
-            className="custom-button"
-          >
-            Chat Thread
-          </Button>
-        </Link>
-        <Link to="/maintenance">
-          <Button
-            type="primary"
-            size="large"
-            style={buttonStyle}
-            className="custom-button"
-          >
-            Maintenance Order
-          </Button>
-        </Link>
-        <Link to="/calendar">
-          <Button
-            type="primary"
-            size="large"
-            style={buttonStyle}
-            className="custom-button"
-          >
-            Calendar Events
-          </Button>
-        </Link>
-        <Link to="/payment">
-          <Button
-            type="primary"
-            size="large"
-            style={buttonStyle}
-            className="custom-button"
-          >
-            Payment Tool
-          </Button>
-        </Link>
+const Home = () => {
+  // State to manage modal visibility
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  // Function to show the modal
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  // Function to handle closing the modal
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  return (
+    <div style={containerStyle}>
+      <img
+        src="https://iiif.micr.io/ZKSPH/full/1280,/0/default.jpg" //replace with apartment image
+        alt="Community Image"
+        style={imageStyle}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          textAlign: "center",
+          zIndex: 1,
+        }}
+      >
+        <h1 style={{ color: "white", fontSize: "4rem" }}>
+          Welcome to Our Community Hub!
+        </h1>
       </div>
-      <Button type="primary" size="large" style={{ marginRight: "20px" }}>
-        <UserOutlined /> Login / Sign Up
-      </Button>
+      <div style={{ ...headerStyle, justifyContent: "space-between" }}>
+        <div style={buttonContainerStyle}>
+          <Link to="/discussions">
+            <Button
+              type="primary"
+              size="large"
+              style={buttonStyle}
+              className="custom-button" //hover doesn't work right now
+            >
+              Discussion Board
+            </Button>
+          </Link>
+          <Link to="/chat">
+            <Button
+              type="primary"
+              size="large"
+              style={buttonStyle}
+              className="custom-button"
+            >
+              Chat Thread
+            </Button>
+          </Link>
+          <Link to="/maintenance">
+            <Button
+              type="primary"
+              size="large"
+              style={buttonStyle}
+              className="custom-button"
+            >
+              Maintenance Order
+            </Button>
+          </Link>
+          <Link to="/calendar">
+            <Button
+              type="primary"
+              size="large"
+              style={buttonStyle}
+              className="custom-button"
+            >
+              Calendar Events
+            </Button>
+          </Link>
+          <Link to="/payment">
+            <Button
+              type="primary"
+              size="large"
+              style={buttonStyle}
+              className="custom-button"
+            >
+              Payment Tool
+            </Button>
+          </Link>
+        </div>
+        <Button
+          type="primary"
+          size="large"
+          style={{ marginRight: "20px" }}
+          onClick={showModal}
+        >
+          <UserOutlined /> Login
+        </Button>
+        <SigninForm
+          isVisible={isModalVisible}
+          handleVisibility={handleCancel}
+        />
+      </div>
+      <Footer />
     </div>
-    <Footer />
-  </div>
-);
+  );
+};
 
 const App = () => {
   return (
