@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 
-const MaintenanceOrder = () => {
+const Maintenance = () => {
   const sidebarItems = [
     { key: "1", icon: <PieChartOutlined />, label: "Dashboard", path: "/" },
     {
@@ -133,4 +133,4 @@ const MaintenanceOrder = () => {
   );
 };
 
-export default MaintenanceOrder;
+export default Maintenance;

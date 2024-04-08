@@ -9,6 +9,7 @@ import CalendarPage from "./component/Calendar";
 import Maintenance from "./component/Maintenance";
 import Footer from "./component/Footer";
 import SigninForm from "./component/SigninForm";
+import MaintenanceOrder from "./component/MaintanceOrderThird";
 import "./App.css";
 
 const containerStyle = {
@@ -103,7 +104,7 @@ const Home = () => {
               Chat Thread
             </Button>
           </Link>
-          <Link to="/maintenance">
+          <Link to="/maintenanceorder">
             <Button
               type="primary"
               size="large"
@@ -161,9 +162,10 @@ const App = () => {
         {/* Define the path for the discussion board, which renders the DiscussionBoard component */}
         <Route path="/discussions" component={DiscussionBoard} />
         <Route path="/chat" component={ChatThread} />
-        <Route path="/maintenance" component={Maintenance} />
+        <Route path="/maintenanceorder" component={Maintenance} />
         <Route path="/calendar" component={CalendarPage} />
         <Route path="/payment" component={Payment} />
+        <Route path="/maintenance" component={MaintenanceOrder} />
       </Switch>
     </Router>
   );
