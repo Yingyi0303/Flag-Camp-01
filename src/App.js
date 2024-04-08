@@ -104,7 +104,7 @@ const Home = () => {
               Chat Thread
             </Button>
           </Link>
-          <Link to="/maintenanceorder">
+          <Link to="/maintenance">
             <Button
               type="primary"
               size="large"
@@ -162,10 +162,10 @@ const App = () => {
         {/* Define the path for the discussion board, which renders the DiscussionBoard component */}
         <Route path="/discussions" component={DiscussionBoard} />
         <Route path="/chat" component={ChatThread} />
-        <Route path="/maintenanceorder" component={Maintenance} />
+        <Route path="/maintenance" component={Maintenance} />
         <Route path="/calendar" component={CalendarPage} />
         <Route path="/payment" component={Payment} />
-        <Route path="/maintenance" component={MaintenanceOrder} />
+        <Route path="/maintenanceorder" component={MaintenanceOrder} />
       </Switch>
     </Router>
   );
