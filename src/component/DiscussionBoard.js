@@ -25,12 +25,12 @@ const DiscussionBoard = () => {
       label: "Discussion Board",
       path: "/discussions",
     },
-    {
-      key: "3",
-      icon: <WechatWorkOutlined />,
-      label: "Chat Thread",
-      path: "/chat",
-    },
+    // {
+    //   key: "3",
+    //   icon: <WechatWorkOutlined />,
+    //   label: "Chat Thread",
+    //   path: "/chat",
+    // },
     {
       key: "4",
       icon: <OrderedListOutlined />,
@@ -105,7 +105,7 @@ const DiscussionBoard = () => {
         <Sider width={200} className="site-layout-background">
           <Menu
             mode="inline"
-            defaultSelectedKeys={["discussion"]}
+            defaultSelectedKeys={["2"]}
             style={{ height: "100%", borderRight: 0 }}
           >
             {sidebarItems.map((item) => (

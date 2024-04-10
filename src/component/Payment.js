@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Layout,
   Menu,
@@ -17,13 +17,31 @@ import {
   CalendarOutlined,
   CreditCardOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const { Header, Content, Sider } = Layout;
 const { Option } = Select;
 const { Title } = Typography;
 
 const Payment = () => {
+  const location = useLocation(); // Use location to access the state passed through react-router
+  const [form] = Form.useForm();
+
+  // State to keep track of whether we've set initial form values
+  const [initialValuesSet, setInitialValuesSet] = useState(false);
+
+  useEffect(() => {
+    // Check if there's state passed to this component (from the Maintenance page)
+    if (location.state && !initialValuesSet) {
+      const { purpose, amount } = location.state;
+      form.setFieldsValue({
+        paymentPurpose: purpose,
+        amountDue: amount,
+      });
+      setInitialValuesSet(true);
+    }
+  }, [location, form, initialValuesSet]);
+
   const sidebarItems = [
     { key: "1", icon: <PieChartOutlined />, label: "Dashboard", path: "/" },
     {
@@ -32,12 +50,12 @@ const Payment = () => {
       label: "Discussion Board",
       path: "/discussions",
     },
-    {
-      key: "3",
-      icon: <WechatWorkOutlined />,
-      label: "Chat Thread",
-      path: "/chat",
-    },
+    // {
+    //   key: "3",
+    //   icon: <WechatWorkOutlined />,
+    //   label: "Chat Thread",
+    //   path: "/chat",
+    // },
     {
       key: "4",
       icon: <OrderedListOutlined />,
@@ -135,7 +153,7 @@ const Payment = () => {
         <Sider width={200} className="site-layout-background">
           <Menu
             mode="inline"
-            defaultSelectedKeys={["chat"]}
+            defaultSelectedKeys={["6"]}
             style={{ height: "100%", borderRight: 0 }}
           >
             {sidebarItems.map((item) => (
@@ -150,7 +168,7 @@ const Payment = () => {
             className="site-layout-background"
             style={{ padding: 24, margin: 0, minHeight: 280 }}
           >
-            <Form layout="vertical">
+            <Form layout="vertical" form={form}>
               <Form.Item label="Name" name="name">
                 <Input placeholder="Enter your name" />
               </Form.Item>
@@ -160,17 +178,30 @@ const Payment = () => {
               <Form.Item label="Purpose of Payment" name="paymentPurpose">
                 <Select placeholder="Select a purpose">
                   <Option value="rent">Rent</Option>
-                  <Option value="cleaning fee">Maintenance</Option>
+                  <Option value="maintenance">Maintenance</Option>
                   <Option value="parking">Parking</Option>
                 </Select>
               </Form.Item>
               <Form.Item label="Amount Due" name="amountDue">
                 <Input prefix="$" placeholder="Amount" />
               </Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button
+                type="primary"
+                htmlType="submit"
+                icon={<CreditCardOutlined />}
+                style={{
+                  backgroundColor: "#1890ff",
+                  borderColor: "#52c41a",
+                  color: "#ffffff",
+                  fontSize: "16px",
+                }}
+              >
                 Make Payment
               </Button>
             </Form>
+            <Title level={2} style={{ marginTop: "24px" }}>
+              Payment History
+            </Title>
             <Table
               columns={columns}
               dataSource={paymentHistory}

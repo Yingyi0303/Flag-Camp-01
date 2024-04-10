@@ -113,12 +113,12 @@ const CalendarPage = () => {
       label: "Discussion Board",
       path: "/discussions",
     },
-    {
-      key: "3",
-      icon: <WechatWorkOutlined />,
-      label: "Chat Thread",
-      path: "/chat",
-    },
+    // {
+    //   key: "3",
+    //   icon: <WechatWorkOutlined />,
+    //   label: "Chat Thread",
+    //   path: "/chat",
+    // },
     {
       key: "4",
       icon: <OrderedListOutlined />,

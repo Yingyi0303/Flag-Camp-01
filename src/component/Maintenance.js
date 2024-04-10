@@ -7,13 +7,23 @@ import {
   CalendarOutlined,
   CreditCardOutlined,
   WechatWorkOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import "antd/dist/antd.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 
 const Maintenance = () => {
+  const history = useHistory();
+
+  const handlePlaceOrderClick = () => {
+    history.push({
+      pathname: "/payment",
+      state: { purpose: "Maintenance", amount: totalAmount },
+    }); // Navigate to the payment page
+  };
+
   const sidebarItems = [
     { key: "1", icon: <PieChartOutlined />, label: "Dashboard", path: "/" },
     {
@@ -22,12 +32,12 @@ const Maintenance = () => {
       label: "Discussion Board",
       path: "/discussions",
     },
-    {
-      key: "3",
-      icon: <WechatWorkOutlined />,
-      label: "Chat Thread",
-      path: "/chat",
-    },
+    // {
+    //   key: "3",
+    //   icon: <WechatWorkOutlined />,
+    //   label: "Chat Thread",
+    //   path: "/chat",
+    // },
     {
       key: "4",
       icon: <OrderedListOutlined />,
@@ -89,7 +99,7 @@ const Maintenance = () => {
         <Sider width={200} className="site-layout-background">
           <Menu
             mode="inline"
-            defaultSelectedKeys={["chat"]}
+            defaultSelectedKeys={["4"]}
             style={{ height: "100%", borderRight: 0 }}
           >
             {sidebarItems.map((item) => (
@@ -125,7 +135,19 @@ const Maintenance = () => {
             }}
           >
             <Typography.Text>Total amount: ${totalAmount}</Typography.Text>
-            <Button type="primary">Place Order</Button>
+            <Button
+              type="primary"
+              onClick={handlePlaceOrderClick}
+              icon={<ShoppingCartOutlined />}
+              style={{
+                backgroundColor: "#1890ff",
+                borderColor: "#1890ff",
+                color: "#ffffff",
+                fontSize: "16px",
+              }} // Custom styles
+            >
+              Place Order
+            </Button>
           </div>
         </Content>
       </Layout>
