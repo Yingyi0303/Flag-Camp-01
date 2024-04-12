@@ -1,15 +1,25 @@
 import React, { useState } from "react";
-import { Button } from "antd";
+import { Button, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+  Redirect,
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "./AuthContext";
+import PrivateRoute from "./PrivateRoute";
 import DiscussionBoard from "./component/DiscussionBoard";
-import ChatThread from "./component/ChatThread";
+//import ChatThread from "./component/ChatThread";
 import Payment from "./component/Payment";
 import CalendarPage from "./component/Calendar";
 import Maintenance from "./component/Maintenance";
 import Footer from "./component/Footer";
 import SigninForm from "./component/SigninForm";
+import SignupForm from "./component/SignupForm";
 import MaintenanceOrder from "./component/MaintanceOrderThird";
+
 import "./App.css";
 
 const containerStyle = {
@@ -48,17 +58,20 @@ const buttonStyle = {
 };
 
 const Home = () => {
+  const { user, logout } = useAuth();
   // State to manage modal visibility
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [activeForm, setActiveForm] = useState("signin");
 
   // Function to show the modal
-  const showModal = () => {
+  const showModal = (formType) => {
     setIsModalVisible(true);
   };
 
   // Function to handle closing the modal
   const handleCancel = () => {
     setIsModalVisible(false);
+    setActiveForm("signin"); // Reset to signin on close
   };
 
   return (
@@ -135,18 +148,24 @@ const Home = () => {
             </Button>
           </Link>
         </div>
-        <Button
-          type="primary"
-          size="large"
-          style={{ marginRight: "20px" }}
-          onClick={showModal}
+
+        <div
+          style={{ display: "flex", alignItems: "center", marginRight: "20px" }}
         >
-          <UserOutlined /> Login
-        </Button>
-        <SigninForm
-          isVisible={isModalVisible}
-          handleVisibility={handleCancel}
-        />
+          <Avatar style={{ backgroundColor: "#f56a00", marginRight: "10px" }}>
+            {" "}
+            {/* You can use the first letter of the username if available */}
+            {user && user.username[0]}
+          </Avatar>
+          {user && (
+            <span style={{ color: "white", marginRight: "20px" }}>
+              {user.username}
+            </span>
+          )}
+          <Button type="primary" onClick={logout}>
+            <UserOutlined /> Logout
+          </Button>
+        </div>
       </div>
       <Footer />
     </div>
@@ -156,18 +175,30 @@ const Home = () => {
 const App = () => {
   return (
     <Router>
-      <Switch>
-        {/* Define the root path to render the Home component */}
-        <Route path="/" exact component={Home} />
-        {/* Define the path for the discussion board, which renders the DiscussionBoard component */}
-        <Route path="/discussions" component={DiscussionBoard} />
-        {/* <Route path="/chat" component={ChatThread} /> */}
-        <Route path="/maintenance" component={Maintenance} />
-        <Route path="/calendar" component={CalendarPage} />
-        <Route path="/payment" component={Payment} />
-        <Route path="/maintenanceorder" component={MaintenanceOrder} />
-      </Switch>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
     </Router>
+  );
+};
+
+const AppRoutes = () => {
+  const { isAuthenticated } = useAuth();
+
+  return (
+    <Switch>
+      <Route path="/login">
+        {isAuthenticated ? <Redirect to="/" /> : <SigninForm />}
+      </Route>
+      <PrivateRoute path="/" exact component={Home} />
+      {/* Define the path for the discussion board, which renders the DiscussionBoard component */}
+      <PrivateRoute path="/discussions" component={DiscussionBoard} />
+      {/* <Route path="/chat" component={ChatThread} /> */}
+      <PrivateRoute path="/maintenance" component={Maintenance} />
+      <PrivateRoute path="/calendar" component={CalendarPage} />
+      <PrivateRoute path="/payment" component={Payment} />
+      <PrivateRoute path="/maintenanceorder" component={MaintenanceOrder} />
+    </Switch>
   );
 };
 
